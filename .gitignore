@@ -4,6 +4,7 @@
 # Familien-Daten) bleibt lokal und geht NICHT mehr auf GitHub — nur racines-gui.
 /*
 !/.gitignore
+!README.md
 !/racines-gui/
 
 # racines-gui: Build-Schnickschnack und Test-Restordner nicht mitnehmen
