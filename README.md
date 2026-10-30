@@ -1,11 +1,11 @@
 # Racines in Rust — Familienkartei und Stammbaum
 
-Eine moderne Neuauflage des alten DOS-Genealogieprogramms **RACINES**
-(Personal Soft, franzoesische Originalkartei aus den 1990ern). Das
-Nachfolgeprogramm liest und schreibt die **originalen Datensaetze**
-(FICHES, MARIAGES, NAISS, DECES ... in den Nummernschluessen .001 bis .006,
-Textseite CP1252) — wer also frueher mit RACINES gearbeitet hat, kann seine
-Datenkartei hier weiterpflegen.
+Eine moderne Neuauflage des alten Windows 95 -Genealogieprogramms **RACINES**
+(Personal Soft, franzoesische Originalkartei aus den 1990ern). Deutsch unter dem 
+Namen "Ahnengalerie" vertrieben. Das Nachfolgeprogramm liest und schreibt 
+die **originalen Datensaetze** (FICHES, MARIAGES, NAISS, DECES ... in den 
+Nummernschluessen .001 bis .005, Textseite CP1252) 
+— wer also frueher mit RACINES gearbeitet hat, kann seine Datenkartei hier weiterpflegen.
 
 Die Oberflaeche ist in **Rust** gebaut (Rahmen [eframe/egui](https://github.com/emilk/egui))
 und laeuft als ein einziges Windows-Programm ohne Installierer.
@@ -79,3 +79,4 @@ racines-gui/        das Rust-Programm (src, Cargo, Bau-Skript, Beispieldaten)
 Der Rest der Entwicklung (Analyse des Originalprogramms, Notizen,
 Werkzeuge) bleibt aus privaten Gruenden lokal und ist nicht Teil dieses
 Repositories.
+
