@@ -1,0 +1,12 @@
+# Git-Whitelist: erst alles ignorieren, dann die Projektordner freigeben.
+# Damit kann der echte Datenordner DATEIEN (Familien-Daten!) NIE hochladen werden.
+# Seit 30.10. (Nachtrag 5): racines-port (Notizen, Werkzeuge, Testdaeten mit
+# Familien-Daten) bleibt lokal und geht NICHT mehr auf GitHub — nur racines-gui.
+/*
+!/.gitignore
+!/racines-gui/
+
+# racines-gui: Build-Schnickschnack und Test-Restordner nicht mitnehmen
+racines-gui/target/
+racines-gui/**/test-tmp*/
+racines-gui/**/config.ini
