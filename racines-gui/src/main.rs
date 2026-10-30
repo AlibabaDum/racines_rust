@@ -12,8 +12,10 @@
 // w1/w2 der Kindkarte); andert das Formular die Elternschluessel, ziehen die
 // Kinderlisten der betroffenen Elternkarten mit.
 // Heirat (L2) ist in der Kartei wie die Kinder bearbeitbar: das v-Feld des
-// Ereignisses ist der B-Schluessel des Ehepartners (bestaetigt an .006: Alex
-// v=5/Anne, Anne v=2/Alex); Hinzuwaehlen und Entfernen wirkt auf beide Karten.
+// Ereignisses ist der B-Schluessel des Ehepartners (bestaetigt an .006: Karte
+// B2 traegt v=5 auf B5, Karte B5 traegt v=2 auf B2 — NAMEN-ALT: dort standen
+// frueher echte Familiennamen, sie bleiben bewusst auch im Kommentar weg);
+// Hinzuwaehlen und Entfernen wirkt auf beide Karten.
 // Das Heiratsdatum sitzt als Eingabefeld in der Zeile (anwenden mit "Datum setzen").
 // Datei -> "Drucken...": Mitgliederblatt aller Karten des Datensatzes, je 8
 // Personen auf einer A4-Seite (4 Reihen zu 2 Spalten); der Drucker wird vorher
@@ -2166,8 +2168,9 @@ impl MyApp {
                 ui.add_space(6.0);
                 // ----- Heirat (L2): bearbeiten -----
                 // In L2-Ereignissen ist v der B-Schluessel des Ehepartners
-                // (bestaetigt an FICHES.006: Alex traegt v=5 (Anne), Anne traegt
-                // v=2 (Alex)). Analog zu den Kindern: "entfernen" traegt die Ehe
+                // (bestaetigt an FICHES.006: Karte B2 traegt v=5 auf B5, Karte
+                // B5 traegt v=2 auf B2 — NAMEN-ALT: fruehere echten Namen sind
+                // bewusst entfernt). Analog zu den Kindern: "entfernen" traegt die Ehe
                 // aus BEIDEN Karten aus, "Heirat hinzuuegen" setzt den Eintrag in
                 // beide Karten. Der 12-Byte-Block traegt (wie die Datumsgruppen)
                 // das Heiratsdatum; 0xFFFF bzw. lauter Nullen heisst unbekannt.

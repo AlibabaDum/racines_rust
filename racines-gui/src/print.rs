@@ -614,19 +614,21 @@ mod tests {
         assert_eq!(z2[3], "Eltern: unbekannt");
         assert_eq!(z2.len(), 4, "ohne Ehe und Kinder bleibt es beim Grundblock");
         // eine Ehe, ein Kind: je eine Zeile ohne Nummerierung
+        // NAMEN-ALT: der bisherige Kunstname ahnelte dem echten Familien-
+        // vorbild aus .006; neutral umbenannt auf "Erika" (Suchwort NAMEN-ALT).
         let familie = PrintPerson {
-            ehen: vec!["Anne (B5) verh. 12.05.1850".to_string()],
+            ehen: vec!["Erika (B5) verh. 12.05.1850".to_string()],
             kinder: vec!["Kind A (B7)".to_string()],
             ..person("Vater", 3, true)
         };
         let z3 = druckzeilen(&familie);
         assert_eq!(z3.len(), 6);
-        assert_eq!(z3[4], "Ehe: Anne (B5) verh. 12.05.1850");
+        assert_eq!(z3[4], "Ehe: Erika (B5) verh. 12.05.1850");
         assert_eq!(z3[5], "Kind: Kind A (B7)");
         // mehrere Ehen und Kinder: jede Verbindung eigene Zeile, Ehen gezaehlt
         let viele = PrintPerson {
             ehen: vec![
-                "Anne (B5) verh. 12.05.1850".to_string(),
+                "Erika (B5) verh. 12.05.1850".to_string(),
                 "Berta (B9)".to_string(),
             ],
             kinder: vec![
@@ -638,7 +640,7 @@ mod tests {
         };
         let z4 = druckzeilen(&viele);
         assert_eq!(z4.len(), 9, "2 Ehen und 3 Kinder als 5 eigene Zeilen");
-        assert_eq!(z4[4], "Ehe 1: Anne (B5) verh. 12.05.1850");
+        assert_eq!(z4[4], "Ehe 1: Erika (B5) verh. 12.05.1850");
         assert_eq!(z4[5], "Ehe 2: Berta (B9)");
         assert_eq!(z4[6], "Kind: Kind A (B7)");
         assert_eq!(z4[7], "Kind: Kind B (B8)");

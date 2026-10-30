@@ -518,8 +518,13 @@ pub fn beziehungen_entfernen(cards: &mut [Card], geloeschter_b: u16) -> Vec<Stri
 }
 
 // ---------------- Ehepartner-Beziehungen (L2) bearbeiten ----------------
+// NAMEN-ALT (30.10.2026): In diesem und den folgenden Kommentaren standen
+// echte Familiennamen aus dem Datensatz .006; sie sind bewusst auch im
+// auskommentierten Zustand NICHT uebernommen, damit sie nicht auf GitHub
+// auftauchen. Suchwort: NAMEN-ALT.
 // In den L2-Ereignissen ist das v-Feld der B-Schluessel des Ehepartners
-// (bestaetigt an FICHES.006: Alex traegt v=5/Anne, Anne traegt v=2/Alex;
+// (bestaetigt an FICHES.006: Karte B2 traegt v=5 auf Karte B5, Karte B5
+// traegt v=2 auf Karte B2;
 // ledige Karten haben dort keinen Eintrag). Eine Heirat ist eine Paarbeziehung
 // und wird deshalb BEIDSEITIG gepflegt: Eintrag in der L2-Liste beider Karten
 // (mit v auf den jeweils anderen zeigt). Das Heiratsdatum sitzt im 12-Byte-
@@ -1367,7 +1372,9 @@ mod tests {
     fn ereignistafeln_kopien() {
         let dir = Path::new("../racines-port/data");
 
-        // .006: Geburt 2 aktive Saetze (Dummer/Alex B=2, Koschityke/Anne B=5), Heirat 1 Satz.
+        // .006: Geburt 2 aktive Saetze (Karten B=2 und B=5), Heirat 1 Satz.
+        // NAMEN-ALT: in der alten Fassung standen hier die echten Namen der
+        // beiden Personen (Suchwort NAMEN-ALT).
         let (tabs, probs) = load_event_tables(dir, ".006");
         assert!(probs.is_empty(), "Probleme: {:?}", probs);
         let geb = tabs.iter().find(|t| t.kind == EvKind::Nais).expect("NAISS.006 vorhanden");
@@ -1375,23 +1382,34 @@ mod tests {
         assert_eq!(geb.recsize, 3593);
         assert_eq!(geb.n, 2);
         assert_eq!(geb.used_count(), 2);
+        // NAMEN-ALT (30.10.2026): Der Geburtssatz wurde frueher ueber den
+        // echten Familiennamen gesucht:
+        //   let d = geb.recs.iter()
+        //       .find(|r| r.fields.iter().any(|(_, v)| v == "<Familienname>"))
+        //       .expect("Satz <Familienname>");
+        // und Geburtsort/Vater/Mutter gegen echte Namen und einen echten
+        // Geburtsort geprueft. Die Namen bleiben dem Repo bewusst fern —
+        // gesucht wird jetzt neutral ueber den B-Schluessel, geprueft nur
+        // noch, dass die Felder vorhanden und gefüllt sind.
         let d = geb
             .recs
             .iter()
-            .find(|r| r.fields.iter().any(|(_, v)| v == "Dummer"))
-            .expect("Satz Dummer");
+            .find(|r| r.key == Some(2))
+            .expect("Geburtssatz mit B-Schluessel 2");
         assert_eq!(d.key, Some(2));
         assert_eq!(d.ib, 2);
-        assert!(d.fields.iter().any(|(l, v)| *l == "Geburtsort" && v == "Schwerin"));
-        assert!(d.fields.iter().any(|(l, v)| *l == "Vater" && v.contains("Egon")));
-        assert!(d.fields.iter().any(|(l, v)| *l == "Mutter" && v.contains("Ingeborg")));
+        assert!(d.fields.iter().any(|(l, v)| *l == "Geburtsort" && !v.is_empty()));
+        assert!(d.fields.iter().any(|(l, v)| *l == "Vater" && !v.is_empty()));
+        assert!(d.fields.iter().any(|(l, v)| *l == "Mutter" && !v.is_empty()));
         let hei = tabs.iter().find(|t| t.kind == EvKind::Mari).expect("MARIAGES.006 vorhanden");
         assert_eq!(hei.n, 1);
         let h = hei.recs.iter().find(|r| r.used).unwrap();
         assert_eq!(h.key, Some(2));
         assert_eq!(h.key2, Some(5));
-        assert!(h.fields.iter().any(|(l, v)| *l == "Ehemann" && v.contains("Alex")));
-        assert!(h.fields.iter().any(|(l, v)| *l == "Ehefrau" && v.contains("Anne")));
+        // NAMEN-ALT: frueher "Ehemann ... <Vorname Mann>" bzw. "Ehefrau ...
+        // <Vorname Frau>" mit echten Namen; jetzt nur vorhanden-und-gefuellt.
+        assert!(h.fields.iter().any(|(l, v)| *l == "Ehemann" && !v.is_empty()));
+        assert!(h.fields.iter().any(|(l, v)| *l == "Ehefrau" && !v.is_empty()));
 
         // .001: leere Taufen/Benediktion/Begraebnis/Tod — parsielbar, keine aktiven Saetze.
         let (t1, probs1) = load_event_tables(dir, ".001");
